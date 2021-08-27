@@ -1,0 +1,40 @@
+<br>
+<br>
+<form action="" [formGroup]="validateForm" (ngSubmit)="submitForm()" style="width: 95%; height: 740px; margin: auto; position: relative;">
+    <span class="badge rounded-pill bg-secondary">Diunsa</span>
+    <br>
+    <br>
+    <div class="container-form">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input type="text" class="form-control" formControlName="direccion" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Descripcion</label>
+            <input type="text" class="form-control" formControlName="descripcion" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Latitud</label>
+            <input type="number" class="form-control" formControlName="latitud" placeholder="Escriba aqui...">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Longitud</label>
+            <input type="number" class="form-control" formControlName="longitud" placeholder="Escriba aqui...">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Altura</label>
+            <input type="number" class="form-control" formControlName="altura" placeholder="Escriba aqui...">
+        </div>
+    </div>
+    <p-selectButton [options]="stateOptions" formControlName="estado" optionLabel="label" optionValue="value"></p-selectButton>
+    <div style="display: flex; justify-content: space-between; position: absolute; bottom: 0; width: 100%;">
+        <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-secondary p-button-sm"></button>
+        <p-button *ngIf="!next" label="Guardar" (onClick)="Guardar()" icon="pi pi-check" styleClass="p-button-sm"></p-button>
+    </div>
+</form>

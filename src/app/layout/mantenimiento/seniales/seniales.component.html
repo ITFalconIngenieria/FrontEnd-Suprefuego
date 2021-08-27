@@ -1,0 +1,32 @@
+<br>
+<div style="margin: 0% 8% 8% 0%; display: flex; justify-content: flex-end;">
+    <p-speedDial (onClick)="showForm()" radius="80" direction="up" type="semi-circle"></p-speedDial>
+</div>
+<br>
+
+<div class="card">
+    <p-table [value]="seniales" [paginator]="true" [rows]="1" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} señales">
+        <ng-template pTemplate="body" let-senial>
+            <tr>
+                <td>
+                    <div class="container-td">
+                        <div class="controles">
+                            <i class="pi pi-cog" pTooltip="Configuración" style="font-size: 40px; margin-bottom: 30%"></i>
+                            <i class="pi pi-trash" pTooltip="Eliminar" style="font-size: 40px;"></i>
+                        </div>
+                        <img src="assets/img/mantenimiento/control.svg" style="width: 20%;" alt="">
+                        <div>
+                            <p class="nombre">{{ senial.unidad }}</p>
+                            <p class="descripcion">{{ senial.descripcion }}</p>
+                            <p-tag styleClass="p-mr-2" severity="danger" icon="pi pi-share-alt" [value]="senial.fuente"></p-tag>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<p-sidebar styleClass="p-sidebar-md" [(visible)]="displayForm" position="right" [baseZIndex]="10000" [modal]="false">
+    <app-formSeniales></app-formSeniales>
+</p-sidebar>

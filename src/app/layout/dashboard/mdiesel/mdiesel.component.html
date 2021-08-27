@@ -1,0 +1,196 @@
+<br>
+<div class="row text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div #divCylinder class="card margenes divSize border">
+                    <fusioncharts class="graficos margenes" height="230" type="Cylinder" [dataSource]="tanqueAgua">
+                    </fusioncharts>
+                    <button pButton pRipple type="button" (click)="showHisTanque()" label="..."
+                        class="p-button-secondary p-button-text"></button>
+                    <div *ngIf="errorPresion" class="col-sm-6 shadow-sm"
+                        style="position:absolute; margin-top: -5%; margin-left: 25%;">
+                        <div class="row">
+                            <div class="col-sm-8 bg-danger" style="border-radius: 5px 0px 0px 5px; color: white;">
+                                <p>Low Water Level</p>
+                            </div>
+                            <div class="col-sm-4" style="border-radius: 0px 5px 5px 0px; background-color: white;">
+                                <div class="spinner-grow text-danger" style="margin-top: 5%; margin-bottom: 5%;"
+                                    role="status">
+                                    <span class="visually-hidden">Falla</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div #divGauge class="card margenes divSize border ">
+                    <fusioncharts class="graficos margenes" height="230" type="angulargauge"
+                        [dataSource]="presionSistema">
+                    </fusioncharts>
+                    <button pButton pRipple type="button" (click)="showHisPresion()" label="..."
+                        class="p-button-secondary p-button-text"></button>
+                    <!-- Alerta Presion -->
+                    <div *ngIf="errorPresion" class="col-sm-6 shadow-sm"
+                        style="position:absolute; margin-top: -5%; margin-left: 25%;">
+                        <div class="row">
+                            <div class="col-sm-8 bg-danger" style="border-radius: 5px 0px 0px 5px; color: white;">
+                                <p>System Pressure</p>
+                            </div>
+                            <div class="col-sm-4" style="border-radius: 0px 5px 5px 0px; background-color: white;">
+                                <div class="spinner-grow text-danger" style="margin-top: 5%; margin-bottom: 5%;"
+                                    role="status">
+                                    <span class="visually-hidden">Falla</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card divSize margenes border">
+                    <div class="container" style="margin-top: 25%;">
+                        <h3>{{time}}</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4>Motor</h4>
+                <div #divMotor class="card border" style="height: auto;">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <img src="assets/img/motor/diesel.jpg" width="90%"
+                                style="border-radius: 10px; margin-left: 5%;">
+                            <!-- Common -->
+                            <div *ngIf="errorMotor" class="col-sm-6 shadow-lg"
+                                style="width: 25%; height: 5%; position: absolute; top: 2%; left: 25%;">
+                                <div class="row">
+                                    <div class="col-sm-8 bg-danger"
+                                        style="border-radius: 5px 0px 0px 5px; color: white;">
+                                        <p>Common</p>
+                                    </div>
+                                    <div class="col-sm-4 bg-light" style="border-radius: 0px 5px 5px 0px;">
+                                        <div class="spinner-grow text-danger" style="margin-top: 5%; margin-bottom: 5%;"
+                                            role="status">
+                                            <span class="visually-hidden">Falla</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="errorMotor" class="card border-danger mb-3 shadow-sm linea90"
+                                style="max-width: 10rem; position: absolute; top: 17%; left: 35%;">
+                                <div class="card-body text-danger">
+                                </div>
+                            </div>
+                            <!-- Fail to start -->
+                            <div *ngIf="errorMotor" class="col-sm-6 shadow-lg"
+                                style="width: 25%; height: 5%; position: absolute; bottom: 50%; right: 15%;">
+                                <div class="row">
+                                    <div class="col-sm-8 bg-danger"
+                                        style="border-radius: 5px 0px 0px 5px; color: white;">
+                                        <p>Fail to start</p>
+                                    </div>
+                                    <div class="col-sm-4 bg-light" style="border-radius: 0px 5px 5px 0px;">
+                                        <div class="spinner-grow text-danger" style="margin-top: 5%; margin-bottom: 5%;"
+                                            role="status">
+                                            <span class="visually-hidden">Falla</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="errorMotor" class="card border-danger mb-3 shadow-sm linea"
+                                style="max-width: 10rem; position: absolute; bottom: 45%; right: 40%;">
+                                <div class="card-body text-danger">
+                                </div>
+                            </div>
+                            <!-- Engine run -->
+                            <div *ngIf="errorMotor" class="col-sm-6 shadow-lg"
+                                style="width: 25%; height: 5%; position: absolute; bottom: 25%; right: 15%;">
+                                <div class="row">
+                                    <div class="col-sm-8 bg-danger"
+                                        style="border-radius: 5px 0px 0px 5px; color: white;">
+                                        <p>Fail to start</p>
+                                    </div>
+                                    <div class="col-sm-4 bg-light" style="border-radius: 0px 5px 5px 0px;">
+                                        <div class="spinner-grow text-danger" style="margin-top: 5%; margin-bottom: 5%;"
+                                            role="status">
+                                            <span class="visually-hidden">Falla</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="errorMotor" class="card border-danger mb-3 shadow-sm linea45"
+                                style="max-width: 10rem; position: absolute; bottom: 22%; right: 40%;">
+                                <div class="card-body text-danger">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6" style="margin-top: 10%;">
+                            <div class="col-sm-12">
+                                <p-selectButton disabled="false" [options]="stateOptions" [(ngModel)]="ioMotor"
+                                    optionLabel="label" optionValue="value"></p-selectButton>
+                            </div>
+                            <br>
+                            <!-- <div class="col-sm-12">
+                                <fusioncharts class="graficos margenes" height="80" width="70%" type="hlineargauge"
+                                    [dataSource]="estadoMotor">
+                                </fusioncharts>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h4>Bomba Jockey</h4>
+                <div #divBomba class="card border">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <img src="assets/img/motor/bombajockey.jpg" width="80%">
+                        </div>
+                        <div class="col-sm-4" style="margin-top: 10%;">
+                            <p-inputSwitch disabled="true" [(ngModel)]="ioBomba"></p-inputSwitch>
+                        </div>
+
+                    </div>
+                    <div *ngIf="errorBomba" class="card shadow-sm"
+                        style="max-width: 10rem; position: absolute; bottom: 10%; right: -15%;">
+                        <div class="card-header bg-danger" style="color: white;">
+                            Power Failure</div>
+                        <div class="card-body text-danger ">
+                            <div class="spinner-grow text-danger" role="status">
+                                <span class="visually-hidden">Falla</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 5%;">
+                    <img src="assets/img/logo/logo.png" width="100%">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <br>
+    </div>
+</div>
+
+
+
+
+<p-sidebar [(visible)]="showHtanque" [fullScreen]="true" [baseZIndex]="10000" [modal]="true">
+    <h3>Historico de niveles de tanque</h3>
+    <br>
+    <app-htanque></app-htanque>
+</p-sidebar>
+
+<p-sidebar [(visible)]="showHpresion" [fullScreen]="true" [baseZIndex]="10000" [modal]="false">
+    <h3>Historico de presion del sistema</h3>
+    <br>
+    <app-hpresion></app-hpresion>
+</p-sidebar>

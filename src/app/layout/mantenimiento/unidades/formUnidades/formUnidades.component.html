@@ -1,0 +1,56 @@
+<br>
+<form action="" [formGroup]="validateForm" (ngSubmit)="submitForm()" style="width: 95%; height: 740px; margin: auto; position: relative;">
+    <h3>Configuración de unidades</h3>
+    <br>
+    <br>
+    <div class="container-form">
+        <div class="mb-3">
+            <label class="form-label">Cuanto de bomba</label>
+            <select class="form-select" formControlName="bomba">
+              <option value="1">Bomba 1</option>
+              <option value="2">Bomba 2</option>
+              <option value="3">Bomba 3</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Tipo motor</label>
+            <select class="form-select" formControlName="motor">
+              <option value="1">Motor 1</option>
+              <option value="2">Motor 2</option>
+              <option value="3">Motor 3</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Marca</label>
+            <input type="text" class="form-control" formControlName="marca" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Modelo</label>
+            <input type="text" class="form-control" formControlName="modelo" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">GMP</label>
+            <input type="text" class="form-control" formControlName="gmp" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">PSI</label>
+            <input type="text" class="form-control" formControlName="psi" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">HP</label>
+            <input type="text" class="form-control" formControlName="hp" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">RPM</label>
+            <input type="text" class="form-control" formControlName="rpm" placeholder="Escriba aqui...">
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Estado</label>
+        <p-selectButton [options]="stateOptions" formControlName="estado" optionLabel="label" optionValue="value"></p-selectButton>
+    </div>
+    <div style="display: flex; justify-content: space-between; position: absolute; bottom: 0; width: 100%;">
+        <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-secondary p-button-sm"></button>
+        <p-button label="Guardar" (onClick)="Guardar()" icon="pi pi-check" styleClass="p-button-sm"></p-button>
+    </div>
+</form>

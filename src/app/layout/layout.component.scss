@@ -1,0 +1,31 @@
+.dashboardBack{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.sizelayout{
+    position: fixed;
+    overflow-y:hidden;
+    overflow-x:hidden;
+    height: 100%;
+}
+
+.logo{
+    position: fixed;
+    left: 12.5%;
+    top: 15%;
+}
+
+#circulo {
+    width: 100%;
+    height: 50%;
+    border-radius: 50% 50% 0 0;
+    -moz-border-radius: 50% 50% 0 0;
+    -webkit-border-radius: 50% 50% 0 0;
+    margin-left: 0%;
+    bottom: 30%;
+    background: rgba(236,236,236,1);
+    position: absolute;
+    z-index: -1;
+}

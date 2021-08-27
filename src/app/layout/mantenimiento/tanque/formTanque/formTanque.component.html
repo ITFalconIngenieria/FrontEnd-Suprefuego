@@ -1,0 +1,36 @@
+<br>
+<form action="" [formGroup]="validateForm" (ngSubmit)="submitForm()" style="width: 95%; height: 740px; margin: auto; position: relative;">
+    <h3>Configuración de tanque de agua</h3>
+    <br>
+    <br>
+    <div class="container-form">
+        <div class="mb-3">
+            <label class="form-label">Señal</label>
+            <select class="form-select" formControlName="senal">
+              <option value="1">Señal 1</option>
+              <option value="2">Señal 2</option>
+              <option value="3">Señal 3</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Capacidad maxima</label>
+            <input type="number" class="form-control" formControlName="capmax" placeholder="Escriba aqui...">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Set point</label>
+            <select class="form-select" formControlName="setpoint">
+              <option value="1">Nivel 1</option>
+              <option value="2">Nivel 2</option>
+              <option value="3">Nivel 3</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Estado</label>
+            <p-selectButton [options]="stateOptions" formControlName="estado" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; position: absolute; bottom: 0; width: 100%;">
+        <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-secondary p-button-sm"></button>
+        <p-button label="Guardar" (onClick)="Guardar()" icon="pi pi-check" styleClass="p-button-sm"></p-button>
+    </div>
+</form>
