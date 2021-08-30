@@ -8,28 +8,21 @@ import { Component, OnInit } from '@angular/core';
 export class EmpresaComponent implements OnInit {
 
   datas: any;
-  dataSitio: any;
   displayForm: boolean;
   empresas: any[] = [];
   first = 0;
   rows = 1;
-  displayModalSitios: boolean;
   displayModalBomba: boolean;
 
-  sitios: any[] = [];
   bombas: any[] = [];
   nomEmpresa: any;
-  nomSitio: any;
 
   constructor() {
     this.displayForm = false;
     this.datas = [];
-    this.dataSitio = [];
   }
 
   ngOnInit(): void {
-    this.datas.push({ value: 0, id: 0, list: [{ value: 0, id: 0, list: [{ value: 0, id: 0 }] }] });
-    this.dataSitio.push({ value: 1, id: 1 });
 
     this.empresas = [
       {
@@ -64,28 +57,6 @@ export class EmpresaComponent implements OnInit {
       }
     ];
 
-    this.sitios = [
-      {
-        nombre: 'Sitios 1',
-        descripcion: 'Sitio para almacenar las bombas',
-        direccion: 'SPS calle 7 ave 9',
-        estado: true
-      },
-      {
-        nombre: 'Sitios 2',
-        descripcion: 'Sitio para almacenar las bombas',
-        direccion: 'SPS calle 7 ave 9',
-        estado: true
-      },
-      {
-        nombre: 'Sitios 3',
-        descripcion: 'Sitio para almacenar las bombas',
-        direccion: 'SPS calle 7 ave 9',
-        estado: true
-      }
-    ];
-
-
     this.bombas = [
       {
         descripcion: 'Cuarto de bomba 1 ',
@@ -103,15 +74,9 @@ export class EmpresaComponent implements OnInit {
 
   }
 
-  showModalDialogSitio(empresa: any) {
-    this.displayModalSitios = true;
-    this.nomEmpresa = empresa.nombre;
-  }
-
-
   showModalDialogBomba(bomba: any) {
     this.displayModalBomba = true;
-    this.nomSitio = bomba.nombre;
+    this.nomEmpresa = bomba.nombre    
   }
 
   next() {

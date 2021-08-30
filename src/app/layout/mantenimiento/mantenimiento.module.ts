@@ -35,7 +35,6 @@ import { FormUnidadesComponent } from './unidades/formUnidades/formUnidades.comp
 import { FormMotorComponent } from './tipomotor/formMotor/formMotor.component';
 import { StepEmpresaComponent } from './empresa/formempresa/stepEmpresa/stepEmpresa.component';
 import { StepCuartoComponent } from './empresa/formempresa/stepCuarto/stepCuarto.component';
-import { StepSitioComponent } from './empresa/formempresa/stepSitio/stepSitio.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +51,6 @@ import { StepSitioComponent } from './empresa/formempresa/stepSitio/stepSitio.co
     FormTanqueComponent,
     StepEmpresaComponent,
     StepCuartoComponent,
-    StepSitioComponent,
   ],
   imports: [
     FormsModule,

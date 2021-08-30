@@ -4,53 +4,21 @@
 </div>
 <br><br><br>
 <div class="card">
-    <p-table [paginator]="true" [value]="data" dataKey="id" styleClass="p-datatable-sm" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="{first} a {last} de {totalRecords} registros" [rowsPerPageOptions]="[10,25,50]">
-        <ng-template pTemplate="header">
+    <p-table [value]="tanques" [paginator]="true" [rows]="1" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} tanques">
+        <ng-template pTemplate="body" let-tanque>
             <tr>
-                <th>Señal</th>
-                <th>Capacidad Max.</th>
-                <th>Set point</th>
-                <th>Estado</th>
-                <th style="width:8rem"></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="Señal">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            Señal
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="Capacidad Max.">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            Capacidad Max.
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="Set point">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            Set point
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-inputSwitch></p-inputSwitch>
-                </td>
-                <td style="text-align:center;">
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                <td>
+                    <div class="container-td">
+                        <div class="controles">
+                            <i class="pi pi-cog" pTooltip="Configuración" style="font-size: 40px; margin-bottom: 30%"></i>
+                            <i class="pi pi-trash" pTooltip="Eliminar" style="font-size: 40px;"></i>
+                        </div>
+                        <img src="assets/img/mantenimiento/tank.svg" style="width: 20%;" alt="">
+                        <div>
+                            <p class="nombre">{{ tanque.senal }}</p>
+                            <p-tag styleClass="p-mr-2" severity="success" [value]="'Capacidad max: ' +  tanque.capmax " [rounded]="true"></p-tag>
+                        </div>
+                    </div>
                 </td>
             </tr>
         </ng-template>

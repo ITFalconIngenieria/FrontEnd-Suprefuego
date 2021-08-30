@@ -18,19 +18,14 @@ export class MantenimientoComponent implements OnInit {
         url: 'empresa'
       },
       {
-        titulo: 'Señales',
-        icon: 'pi pi-caret-up',
-        url: 'seniales'
-      },
-      {
-        titulo: 'Tipo de motor',
-        icon: 'pi pi-ticket',
-        url: 'tipomotor'
-      },
-      {
         titulo: 'Unidades',
         icon: 'pi pi-th-large',
         url: 'unidades'
+      },
+      {
+        titulo: 'Señales',
+        icon: 'pi pi-caret-up',
+        url: 'seniales'
       },
       {
         titulo: 'Tanque de agua',

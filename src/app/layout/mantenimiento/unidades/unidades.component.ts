@@ -7,14 +7,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UnidadesComponent implements OnInit {
   displayForm: boolean;
-  data: any;
+  unidades: any[] = [];
+
   constructor() {
     this.displayForm = false;
-    this.data=[];
   }
 
   ngOnInit(): void {
-    this.data.push({value: 1});
+    this.unidades = [
+      {
+        cuarto: 'cuarto 1',
+        motor: 'Eletrico',
+        marca: 'CLARKE',
+        modelo: 'JU4H-UF34',
+        sn: 'SO159989P',
+        hp: '115',
+        rpm: '3000',
+        estado: true
+      },
+      {
+        cuarto: 'cuarto 2',
+        motor: 'Diesel',
+        marca: 'CLARKE',
+        modelo: 'JU4H-UF34',
+        sn: 'SO159989P',
+        hp: '115',
+        rpm: '3000',
+        estado: true
+      }
+    ];
+
   }
 
   showForm() {
