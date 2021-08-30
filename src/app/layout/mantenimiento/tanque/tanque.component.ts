@@ -8,13 +8,22 @@ import { Component, OnInit } from '@angular/core';
 export class TanqueComponent implements OnInit {
   displayForm: boolean;
   data: any;
+  tanques: any[] = [];
+
   constructor() {
     this.displayForm = false;
-    this.data=[];
+    this.data = [];
   }
 
   ngOnInit(): void {
-    this.data.push({value: 0});
+    this.data.push({ value: 0 });
+
+    this.tanques = [{
+      senal: 'señal 1',
+      capmax: 100,
+      setpoint: 1,
+      estado: true
+    }]
   }
 
   showForm() {

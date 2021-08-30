@@ -8,7 +8,6 @@ import { TipomotorComponent } from './tipomotor/tipomotor.component';
 import { UnidadesComponent } from './unidades/unidades.component';
 import { StepEmpresaComponent } from './empresa/formempresa/stepEmpresa/stepEmpresa.component';
 import { StepCuartoComponent } from './empresa/formempresa/stepCuarto/stepCuarto.component';
-import { StepSitioComponent } from './empresa/formempresa/stepSitio/stepSitio.component';
 
 const routes: Routes = [
     {
@@ -22,10 +21,6 @@ const routes: Routes = [
                     {
                         path: 'stepEmpresa',
                         component: StepEmpresaComponent
-                    },
-                    {
-                        path: 'stepSitios',
-                        component: StepSitioComponent
                     },
                     {
                         path: 'stepCuarto',

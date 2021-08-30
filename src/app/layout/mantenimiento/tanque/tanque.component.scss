@@ -1,0 +1,29 @@
+.container-td {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.controles {
+    display: flex;
+    flex-direction: column;
+    margin-right: 4%;
+}
+
+.nombre {
+    font-size: 40px;
+    color: black;
+    font-weight: 500;
+    margin: 0%;
+}
+
+.descripcion {
+    font-size: 21px;
+    color: #656565;
+    margin: 0%;
+}
+
+p-tag {
+    font-size: 15px;
+}

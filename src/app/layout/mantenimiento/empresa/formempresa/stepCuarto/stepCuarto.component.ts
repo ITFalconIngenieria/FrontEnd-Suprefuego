@@ -24,6 +24,7 @@ export class StepCuartoComponent implements OnInit {
     this.validateForm = this.fb.group({
       nombre: [null, [Validators.required]],
       descripcion: [null, [Validators.required]],
+      ubicacion: [null, [Validators.required]],
       estado: [null, [Validators.required]],
     });
   }

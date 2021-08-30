@@ -2,110 +2,51 @@
 <div style="margin: 0% 8% 8% 0%; display: flex; justify-content: flex-end;">
     <p-speedDial (onClick)="showForm()" radius="80" direction="up" type="semi-circle"></p-speedDial>
 </div>
-<br><br><br>
 <div class="card">
-    <p-table [paginator]="true" [value]="data" dataKey="id" styleClass="p-datatable-sm" [rows]="10" [showCurrentPageReport]="true" currentPageReportTemplate="{first} a {last} de {totalRecords} registros" [rowsPerPageOptions]="[10,25,50]">
-        <ng-template pTemplate="header">
+    <p-table [value]="unidades" [paginator]="true" [rows]="1" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} tanques">
+        <ng-template pTemplate="body" let-unidad>
             <tr>
-                <th>Cuarto B</th>
-                <th>Motor</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>GMP</th>
-                <th>PSI</th>
-                <th>HP</th>
-                <th>RPM</th>
-                <th>Estado</th>
-                <th style="width:8rem"></th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="Cuarto">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            Cuarto
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="Motor">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            Motor
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="Marca">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            Marca
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="Modelo">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            Modelo
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="GMP">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            GMP
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="PSI">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            PSI
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="HP">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            HP
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-cellEditor>
-                        <ng-template pTemplate="input">
-                            <input type="text" class="form-control" formControlName="modelo" placeholder="RPM">
-                        </ng-template>
-                        <ng-template pTemplate="output">
-                            RPM
-                        </ng-template>
-                    </p-cellEditor>
-                </td>
-                <td pEditableColumn>
-                    <p-inputSwitch></p-inputSwitch>
-                </td>
-                <td style="text-align:center;">
-                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                <td>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="container-td">
+                        <span style="position: absolute; top: 3%; left: 2%; font-size: 20px;" class="badge rounded-pill bg-warning text-dark">{{unidad.cuarto}}</span>
+                        <img src="assets/img/mantenimiento/unidad.svg" style="width: 60%; position: relative;" alt="">
+                        <span style="    position: absolute;
+                        top: 32%;
+                        right: 28%;
+                        font-size: 22px;
+                        background-color: #000000;" class="badge rounded-pill">Motor:  {{unidad.motor}}</span>
+                        <span style="position: absolute;
+                        top: 6%;
+                        right: 46%;
+                        font-size: 22px;
+                        color: black;
+                        font-weight: 900;" class="badge rounded-pill"> {{unidad.marca}}</span>
+                        <span style="    position: absolute;
+                        top: 33%;
+                        right: 54%;
+                        font-size: 22px;
+                        background-color: #000000;" class="badge rounded-pill">Modelo:  {{unidad.modelo}}</span>
+                        <span style="position: absolute;
+                        top: 53%;
+                        right: 56%;
+                        font-size: 22px;
+                        background-color: #000000;" class="badge rounded-pill">Serie:  {{unidad.sn}}</span>
+                        <span style="position: absolute;
+                        top: 52%;
+                        right: 33%;
+                        font-size: 22px;
+                        background-color: #000000;" class="badge rounded-pill">HP:  {{unidad.hp}}</span>
+                        <span style="position: absolute;
+                        top: 66%;
+                        right: 44%;
+                        font-size: 22px;
+                        background-color: #000000;" class="badge rounded-pill">RPM:  {{unidad.rpm}}</span>
+                        <span style="position: absolute; bottom: 18%; right: 9%; font-size: 18px;" class="badge rounded-pill bg-success">{{unidad.estado}}</span>
+
+                    </div>
                 </td>
             </tr>
         </ng-template>

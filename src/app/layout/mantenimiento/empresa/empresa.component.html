@@ -18,7 +18,7 @@
                             <p class="nombre">{{ empresa.nombre }}</p>
                             <p class="descripcion">{{ empresa.descripcion }}</p>
                         </div>
-                        <i class="pi pi-compass" pTooltip="Sitios" (click)="showModalDialogSitio(empresa)" style="font-size: 50px; margin-left: 2%;"></i>
+                        <i class="pi pi-align-justify" pTooltip="Cuarto de bombas" (click)="showModalDialogBomba(empresa)" style="font-size: 40px; margin-left: 2%;"></i>
                     </div>
                 </td>
             </tr>
@@ -26,36 +26,8 @@
     </p-table>
 </div>
 
-<p-dialog [header]="nomEmpresa" [(visible)]="displayModalSitios" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
-    <div class="card">
-        <p-table [value]="sitios" [paginator]="true" [rows]="1" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} sitios">
-            <ng-template pTemplate="body" let-sitio>
-                <tr>
-                    <td>
-                        <div class="container-td">
-                            <div class="controles">
-                                <i class="pi pi-plus" pTooltip="Agregar" style="font-size: 35px; margin-bottom: 15%;"></i>
-                                <i class="pi pi-cog" pTooltip="Configuración" style="font-size: 35px; margin-bottom: 15%;"></i>
-                                <i class="pi pi-trash" pTooltip="Eliminar" style="font-size: 35px; margin-bottom: 15%;"></i>
-                            </div>
-                            <img src="assets/img/mantenimiento/gps.svg" style="width: 20%;" alt="">
-                            <div>
-                                <p class="nombre">{{ sitio.nombre }}</p>
-                                <p class="descripcion">{{ sitio.direccion }}</p>
-                            </div>
-                            <i class="pi pi-align-justify" pTooltip="Cuarto de bombas" (click)="showModalDialogBomba(sitio)" style="font-size: 38px; margin-left: 5%;"></i>
-                        </div>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="displayModalSitios=false" label="Ok" styleClass="p-button-text"></p-button>
-    </ng-template>
-</p-dialog>
-
-<p-dialog [header]="nomSitio" [(visible)]="displayModalBomba" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+<p-dialog [header]="nomEmpresa" [(visible)]="displayModalBomba" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+    <i class="pi pi-plus" pTooltip="Agregar" style="font-size: 35px; margin-bottom: 4%;"></i>
     <div class="card">
         <p-table [value]="bombas" [paginator]="true" [rows]="1" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords}">
             <ng-template pTemplate="body" let-bomba>
@@ -63,7 +35,6 @@
                     <td>
                         <div class="container-td">
                             <div class="controles">
-                                <i class="pi pi-plus" pTooltip="Agregar" style="font-size: 35px; margin-bottom: 15%;"></i>
                                 <i class="pi pi-cog" pTooltip="Configuración" style="font-size: 35px; margin-bottom: 15%;"></i>
                                 <i class="pi pi-trash" pTooltip="Eliminar" style="font-size: 35px; margin-bottom: 15%;"></i>
                             </div>

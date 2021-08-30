@@ -17,10 +17,6 @@ export class FormempresaComponent implements OnInit {
       routerLink: 'stepEmpresa',
     },
     {
-      label: 'Sitio',
-      routerLink: 'stepSitios'
-    },
-    {
       label: 'Cuarto de bombas',
       routerLink: 'stepCuarto'
     }
