@@ -4,6 +4,17 @@
         <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
     </div>
     <br><br>
-    <fusioncharts type="area2d" width="1500" height="600" [dataSource]="dataSource">
-    </fusioncharts>
+    <div style="position: relative;">
+        <fusioncharts type="area2d" width="1500" height="600" [dataSource]="dataSource">
+        </fusioncharts>
+        <div style="background-color: rgb(255 255 255);
+        position: absolute;
+        height: 50px;
+        width: 370px;
+        bottom: 0;">
+            <span style="color: rgb(255 255 255);">.</span>
+        </div>
+    </div>
+
+
 </div>

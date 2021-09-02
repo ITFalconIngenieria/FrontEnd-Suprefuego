@@ -11,12 +11,31 @@ export class FormUnidadesComponent implements OnInit {
   validateForm: FormGroup;
   dataMiembros: any;
   stateOptions: any[];
-
+  unidades: any[] = [];
+  marca: string;
   constructor(
     private fb: FormBuilder
-  ) { }
+  ) {
+    this.marca = 'marca';
+  }
 
   ngOnInit() {
+
+    this.unidades = [
+      {
+        nombre: 'Cuarto 1',
+        descripcion: 'Cuarto principal',
+        ubicacion: 'Planta alta',
+        empresa: 'Empresa 1'
+      },
+      {
+        nombre: 'Cuarto 2',
+        descripcion: 'Cuarto secundario',
+        ubicacion: 'Planta alta',
+        empresa: 'Empresa 2'
+      }
+    ];
+
     this.stateOptions = [{ label: 'Activo', value: 'off' }, { label: 'Inactivo', value: 'on' }];
 
     this.validateForm = this.fb.group({
