@@ -1,3 +1,4 @@
+
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -35,6 +36,8 @@ import { FormUnidadesComponent } from './unidades/formUnidades/formUnidades.comp
 import { FormMotorComponent } from './tipomotor/formMotor/formMotor.component';
 import { StepEmpresaComponent } from './empresa/formempresa/stepEmpresa/stepEmpresa.component';
 import { StepCuartoComponent } from './empresa/formempresa/stepCuarto/stepCuarto.component';
+import { BombaPrincipalComponent } from './unidades/bombaPrincipal/bombaPrincipal.component';
+import { BombaJockeyComponent } from './unidades/bombaJockey/bombaJockey.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +54,8 @@ import { StepCuartoComponent } from './empresa/formempresa/stepCuarto/stepCuarto
     FormTanqueComponent,
     StepEmpresaComponent,
     StepCuartoComponent,
+    BombaJockeyComponent,
+    BombaPrincipalComponent
   ],
   imports: [
     FormsModule,

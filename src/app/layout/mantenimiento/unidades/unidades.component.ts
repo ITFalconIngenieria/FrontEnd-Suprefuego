@@ -7,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UnidadesComponent implements OnInit {
   unidades: any[] = [];
-  displayModal: boolean = false;
-  
+  displayModalMotor: boolean = false;
+  displayModalBombaP: boolean = false;
+  displayModalBombaJ: boolean = false;
+
   constructor() {
-    
+
   }
 
   ngOnInit(): void {
@@ -31,8 +33,18 @@ export class UnidadesComponent implements OnInit {
 
   }
 
-  showModalDialog() {
-    this.displayModal = true;
-}
+  showModalMotor() {
+    this.displayModalMotor = true;
+  }
+
+  showModalBombaP() {
+    this.displayModalBombaP = true;
+  }
+
+  showModalBombaJ() {
+    this.displayModalBombaJ = true;
+  }
+
+
 
 }

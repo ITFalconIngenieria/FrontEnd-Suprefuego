@@ -18,9 +18,9 @@
                             <div style="display: flex;
                             flex-direction: row;
                             justify-content: space-between;">
-                                <img (click)="showModalDialog()" src="assets/img/mantenimiento/motor.svg" pTooltip="Motor" style="width: 20%;">
-                                <img src="assets/img/mantenimiento/bombaP.svg" pTooltip="Bomba principal" style="width: 20%;">
-                                <img src="assets/img/mantenimiento/bombaJ.svg" pTooltip="Bomba jockey" style="width: 20%;">
+                                <img (click)="showModalMotor()" src="assets/img/mantenimiento/motor.svg" pTooltip="Motor" style="width: 20%;">
+                                <img (click)="showModalBombaP()" src="assets/img/mantenimiento/bombaP.svg" pTooltip="Bomba principal" style="width: 20%;">
+                                <img (click)="showModalBombaJ()" src="assets/img/mantenimiento/bombaJ.svg" pTooltip="Bomba jockey" style="width: 20%;">
                             </div>
                         </div>
                     </div>
@@ -30,6 +30,14 @@
     </p-table>
 </div>
 
-<p-dialog header="Configuración de motor" [(visible)]="displayModal" position="top" [modal]="true" [style]="{width: '80vw'}" [draggable]="false" [resizable]="false">
+<p-dialog header="Configuración de motor" [(visible)]="displayModalMotor" position="top" [modal]="true" [style]="{width: '80vw'}" [draggable]="false" [resizable]="false">
     <app-formUnidades></app-formUnidades>
+</p-dialog>
+
+<p-dialog header="Configuración de Bomba principal" [(visible)]="displayModalBombaP" position="top" [modal]="true" [style]="{width: '80vw'}" [draggable]="false" [resizable]="false">
+    <app-bombaPrincipal></app-bombaPrincipal>
+</p-dialog>
+
+<p-dialog header="Configuración de Bomba Jockey" [(visible)]="displayModalBombaJ" position="top" [modal]="true" [style]="{width: '80vw'}" [draggable]="false" [resizable]="false">
+    <app-bombaJockey></app-bombaJockey>
 </p-dialog>
