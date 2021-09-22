@@ -4,19 +4,23 @@
 </div>
 <br><br><br>
 <div class="card">
-    <p-table [value]="tanques" [paginator]="true" [rows]="1" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} tanques">
+    <p-table [value]="tanques | tanque:1" [paginator]="true" [rows]="1" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} tanques">
         <ng-template pTemplate="body" let-tanque>
             <tr>
                 <td>
                     <div class="container-td">
                         <div class="controles">
-                            <i class="pi pi-cog" pTooltip="Configuración" style="font-size: 40px; margin-bottom: 30%"></i>
-                            <i class="pi pi-trash" pTooltip="Eliminar" style="font-size: 40px;"></i>
+                            <i class="pi pi-cog" (click)="updateData(tanque); showForm()" pTooltip="Configuración" style="font-size: 40px; margin-bottom: 30%"></i>
+                            <i class="pi pi-trash" (click)="rowDelete(tanque.id)" pTooltip="Eliminar" style="font-size: 40px;"></i>
                         </div>
                         <img src="assets/img/mantenimiento/tank.svg" style="width: 20%;" alt="">
                         <div>
-                            <p class="nombre">{{ tanque.senal }}</p>
-                            <p-tag styleClass="p-mr-2" severity="success" [value]="'Capacidad max: ' +  tanque.capmax " [rounded]="true"></p-tag>
+                            <p style="top: 13%; margin-left: -10%; position: absolute;">Max: {{tanque.setpoint[1]}} </p>
+                            <p style="bottom: 42%; margin-left: -10%; position: absolute;">Min: {{tanque.setpoint[0]}} </p>
+                            <p class="nombre">{{ getSenialName(tanque.senialId) }}</p>
+                            <p-tag styleClass="p-mr-2" [severity]="tanque.estado===true?'success':'danger'"
+                                icon="pi pi-share-alt" [value]="tanque.estado===true?'Activo':'Inactivo'"></p-tag>
+                            <p>Capacidad maxima: {{ tanque.capacidad }}</p>
                         </div>
                     </div>
                 </td>
@@ -25,5 +29,5 @@
     </p-table>
 </div>
 <p-sidebar styleClass="p-sidebar-md" [(visible)]="displayForm" position="right" [baseZIndex]="10000" [modal]="false">
-    <app-formTanque></app-formTanque>
+    <app-formTanque (newTanqueEvent)="showTanque($event)" [oldTanqueEvent]="itemTanque"></app-formTanque>
 </p-sidebar>

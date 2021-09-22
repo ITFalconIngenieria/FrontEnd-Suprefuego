@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SenialService } from 'src/app/core/services/senial/senial.service';
 
 @Component({
   selector: 'app-formSeniales',
@@ -7,17 +8,21 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./formSeniales.component.scss']
 })
 export class FormSenialesComponent implements OnInit {
+  @Input() oldSenialEvent: any;
+  @Output() newSenialEvent = new EventEmitter<any>();
+
   nombre: any;
   validateForm: FormGroup;
   dataMiembros: any;
   stateOptions: any[];
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private senialService: SenialService
   ) { }
 
   ngOnInit() {
-    this.stateOptions = [{label: 'Activo', value: 'off'}, {label: 'Inactivo', value: 'on'}];
+    this.stateOptions = [{ label: 'Activo', value: true }, { label: 'Inactivo', value: false }];
 
     this.validateForm = this.fb.group({
       unidad: [null, [Validators.required]],
@@ -33,9 +38,29 @@ export class FormSenialesComponent implements OnInit {
 
   }
 
-  Guardar(){
-    console.log('guardar');
-    
+  sendItem() {
+    if (this.oldSenialEvent.id === 0) {
+      console.log('Add');
+      
+      this.senialService.dataPost(this.oldSenialEvent)
+        .subscribe(
+          (data: any[] = []) => { 
+            this.Message('Data Saved');
+           },
+          (err) => { console.log(err) }
+        );
+    } else {
+      console.log('Update');
+      this.senialService.dataPut(this.oldSenialEvent)
+        .subscribe(
+          (data: any[] = []) => { this.Message('Data Updated') },
+          (err) => { console.log(err) }
+        );
+    }
   }
 
+  Message(text) {
+    this.newSenialEvent.emit(this.oldSenialEvent);
+    alert(text);
+  }
 }

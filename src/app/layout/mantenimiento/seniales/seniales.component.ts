@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { SenialService } from 'src/app/core/services/senial/senial.service';
 
 @Component({
   selector: 'app-seniales',
@@ -6,63 +7,40 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./seniales.component.scss']
 })
 export class SenialesComponent implements OnInit {
+  @Input () newItem: any;
 
   data: any;
   displayForm: boolean;
   seniales: any[] = []
   first = 0;
   rows = 1;
-
-  constructor() {
+  itemSenial: any;
+  constructor(private senialService: SenialService) {
     this.displayForm = false;
     this.data = [];
+    this.itemSenial = {
+      id: 0,
+      unidad: '',
+      descripcion: '',
+      etiqueta: '',
+      servidor: '',
+      fuente: '',
+      estado: true,
+      isDeleted: 1
+    }
+  }
+
+  getData(){
+    this.senialService.dataGet()
+    .subscribe(
+      (data: any[]=[]) => { this.seniales = data},
+      (err) => {}
+    );
   }
 
   ngOnInit(): void {
     this.data.push({ valule: 0 });
-
-    this.seniales = [
-      {
-        unidad: 'Señal 1',
-        descripcion: 'Señal para monitoreo',
-        etiqueta: 'HN',
-        servidor: 'Servidor 1',
-        fuente: 'Electrico',
-        estado: true
-      }, {
-        unidad: 'Señal 2',
-        descripcion: 'Señal para monitoreo',
-        etiqueta: 'HN',
-        servidor: 'Servidor 2',
-        fuente: 'Electrico',
-        estado: true
-      },
-      {
-        unidad: 'Señal 3',
-        descripcion: 'Señal para monitoreo',
-        etiqueta: 'HN',
-        servidor: 'Servidor 3',
-        fuente: 'Electrico',
-        estado: true
-      },
-      {
-        unidad: 'Señal 4',
-        descripcion: 'Señal para monitoreo',
-        etiqueta: 'HN',
-        servidor: 'Servidor 4',
-        fuente: 'Electrico',
-        estado: true
-      },
-      {
-        unidad: 'Señal 5',
-        descripcion: 'Señal para monitoreo',
-        etiqueta: 'HN',
-        servidor: 'Servidor 5',
-        fuente: 'Electrico',
-        estado: true
-      }
-    ];
-
+    this.getData();
   }
 
   next() {
@@ -85,8 +63,53 @@ export class SenialesComponent implements OnInit {
     return this.seniales ? this.first === 0 : true;
   }
 
+  rowDelete(id) {
+    alert(id);
+    this.senialService.dataDelete({ id: id, isDeleted: 0 })
+      .subscribe(
+        (data: any[]) => { this.onDelete(data) }
+        , (err) => { console.log(err) }
+      );
+  }
+
+  onDelete(unidad){
+    let index = this.seniales.map((d) => { return d.id }).indexOf(unidad.id);
+    this.seniales.splice(index, 1);
+  }
+
+  Message(text){
+    alert(text);
+  }
+
+  cleanData(){
+    this.itemSenial = {
+      id: 0,
+      unidad: '',
+      descripcion: '',
+      etiqueta: '',
+      servidor: '',
+      fuente: '',
+      estado: true,
+      isDeleted: 1
+    }
+  }
+
   showForm() {
     this.displayForm = true;
   }
 
+  hideForm(isHide) {
+    this.displayForm = isHide;
+  }
+
+  showSenial(item){
+    if (item.id===0){
+      this.seniales.unshift(item);
+    }
+    this.displayForm = false;
+  }
+
+  updateData(item){
+    this.itemSenial = item;
+  }
 }
