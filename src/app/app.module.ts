@@ -7,6 +7,8 @@ import { LayoutComponent } from './layout/layout.component';
 import { SharedModule } from './shared/shared.module';
 import { DashboardModule } from './layout/dashboard/dashboard.module';
 import { MantenimientoModule } from './layout/mantenimiento/mantenimiento.module';
+import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,8 +20,10 @@ import { MantenimientoModule } from './layout/mantenimiento/mantenimiento.module
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    CoreModule,
     DashboardModule,
-    MantenimientoModule
+    MantenimientoModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

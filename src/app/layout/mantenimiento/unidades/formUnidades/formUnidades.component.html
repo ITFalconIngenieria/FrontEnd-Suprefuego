@@ -1,23 +1,29 @@
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Electrico</button>
+        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+            role="tab" aria-controls="home" aria-selected="true">Electrico</button>
     </li>
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Diesel</button>
+        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+            role="tab" aria-controls="profile" aria-selected="false">Diesel</button>
     </li>
 </ul>
 <!-- Motor eletrico -->
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
         <div style="margin: 0% 8% 8% 0%; display: flex; justify-content: flex-end;">
-            <p-speedDial radius="80" direction="up" type="semi-circle"></p-speedDial>
+            <button pButton pRipple type="button" (click)="postMotor(1)" label="+" class="p-button-raised p-button-info"
+                style="margin-top: 2%;"></button>
         </div>
-        <p-table [value]="unidades" [paginator]="true" [rows]="1" editMode="row" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros">
+        <p-table [value]="unidades | tmotor:1" [immutable]=false [paginator]="true" [rows]="1" editMode="row"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros">
             <ng-template pTemplate="body" let-editing="editing" let-unidad>
                 <tr [pEditableRow]="unidad">
                     <td>
                         <div>
-                            <img src="assets/img/mantenimiento/placa.svg" style="width: 95%; position: relative;" alt="" srcset="">
+                            <img src="assets/img/mantenimiento/placa.svg" style="width: 95%; position: relative;" alt=""
+                                srcset="">
                             <!-- Datos del motor -->
                             <p style="position: absolute;
                             top: -6%;
@@ -33,156 +39,184 @@
                             font-size: 25px;"> Información del controlador </p>
                         </div>
 
-                        <p-cellEditor style="position: absolute; top: 7%;
-                        left: 17%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span style="color: white; font-size: 25px;"> Marca </span>
-                            </ng-template>
-                        </p-cellEditor>
+                        <div [formGroup]="formElectrico">
+                            <p-cellEditor style="position: absolute; top: 7%;
+                            left: 17%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" formControlName="electricoMotorMarca" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.marca">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span style="color: white; font-size: 25px;"> {{unidad.motor.marca}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
-                        left: 3%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 21%;
+                            left: 3%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
+                                    <input pInputText type="text" formControlName="electricoMotorModelo" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.modelo">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.modelo}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
-                        left: 3%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 36%;
+                            left: 3%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
+                                    <input pInputText type="text" formControlName="electricoMotorSerie" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.serie">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.serie}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 51%;
-                        left: 3%; display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
-                                <span style="color: white; font-size: 25px;"> ... </span>
-                            </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 51%;
+                            left: 3%; display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
+                                    <input pInputText type="text" formControlName="electricoMotorNumero" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.numero">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.numero}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
-                        left: 24%; display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
-                                <span style="color: white; font-size: 25px;"> ... </span>
-                            </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 21%;
+                            left: 24%; display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
+                                    <input pInputText type="text" formControlName="electricoMotorHp" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.hp">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.hp}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
-                        left: 24%; display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
-                                <span style="color: white; font-size: 25px;"> ... </span>
-                            </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 36%;
+                            left: 24%; display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
+                                    <input pInputText type="text" formControlName="electricoMotorRpm" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.rpm">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.rpm}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <!-- Datos del controlador -->
+                            <!-- Datos del controlador -->
 
-                        <p-cellEditor style="position: absolute; top: 7%;
-                        left: 63%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span style="color: white; font-size: 25px;"> Marca </span>
-                            </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 7%;
+                            left: 63%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" formControlName="electricoControllerMarca" style="
+                                        background-color: #ffffff00; color: #4c4c4c;"
+                                        [(ngModel)]="unidad.controlador.marca">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span style="color: #4c4c4c; font-size: 25px;"> {{unidad.controlador.marca}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
-                        left: 44%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">HP</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">HP</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 21%;
+                            left: 44%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">HP</label>
+                                    <input pInputText type="text" formControlName="electricoControllerHp" style="
+                                        background-color: #ffffff00; color: #4c4c4c;"
+                                        [(ngModel)]="unidad.controlador.hp">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">HP</label>
+                                    <span style="color: #4c4c4c; font-size: 25px;"> {{unidad.controlador.hp}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
-                        left: 44%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 36%;
+                            left: 44%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje</label>
+                                    <input pInputText type="text" formControlName="electricoControllerVoltaje" style="
+                                        background-color: #ffffff00; color: #4c4c4c;"
+                                        [(ngModel)]="unidad.controlador.voltaje">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje</label>
+                                    <span style="color: #4c4c4c; font-size: 25px;"> {{unidad.controlador.voltaje}}
+                                    </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 51%;
-                        left: 44%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Fase</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Fase</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 51%;
+                            left: 44%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Fase</label>
+                                    <input pInputText type="text" formControlName="electricoControllerFase" style="
+                                        background-color: #ffffff00; color: #4c4c4c;"
+                                        [(ngModel)]="unidad.controlador.fase">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Fase</label>
+                                    <span style="color: #4c4c4c; font-size: 25px;"> {{unidad.controlador.fase}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
-                        left: 71%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Frecuencia</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Frecuencia</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 21%;
+                            left: 71%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Frecuencia</label>
+                                    <input pInputText type="text" formControlName="electricoControllerFrecuencia" style="
+                                        background-color: #ffffff00; color: #4c4c4c;"
+                                        [(ngModel)]="unidad.controlador.frecuencia">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Frecuencia</label>
+                                    <span style="color: #4c4c4c; font-size: 25px;"> {{unidad.controlador.frecuencia}}
+                                    </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
-                        left: 71%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Presión</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Presión</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 36%;
+                            left: 71%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Presión</label>
+                                    <input pInputText type="text" formControlName="electricoControllerPresion" style="
+                                        background-color: #ffffff00; color: #4c4c4c;"
+                                        [(ngModel)]="unidad.controlador.presion">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Presión</label>
+                                    <span style="color: #4c4c4c; font-size: 25px;"> {{unidad.controlador.presion}}
+                                    </span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </div>
+
                         <div style="position: absolute; right: 0%; top: 42%;">
-                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
-                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                                (click)="onRowEditInit(unidad)" class="p-button-rounded p-button-text"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                                (click)="onRowEditSave(unidad)" [disabled]="formElectrico.invalid"
+                                class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash"
+                                (click)="onRowEditDelete(unidad.id)"
+                                class="p-button-rounded p-button-text p-button-danger"></button>
+                            <br>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowBack(unidad)"
+                                class="p-button-rounded p-button-text p-button-danger"></button>
                         </div>
 
                     </td>
@@ -199,14 +233,19 @@
     <!-- Motor Diesel-->
     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         <div style="margin: 0% 8% 8% 0%; display: flex; justify-content: flex-end;">
-            <p-speedDial radius="80" direction="up" type="semi-circle"></p-speedDial>
+            <br><br>
+            <button pButton pRipple type="button" (click)="postMotor(2)" label="+" class="p-button-raised p-button-info"
+                style="margin-top: 2%;"></button>
         </div>
-        <p-table [value]="unidades" [paginator]="true" [rows]="1" editMode="row" [showCurrentPageReport]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros">
+        <p-table [value]="unidades | tmotor:2" [immutable]=false [paginator]="true" [rows]="1" editMode="row"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros">
             <ng-template pTemplate="body" let-editing="editing" let-unidad>
                 <tr [pEditableRow]="unidad">
                     <td>
                         <div>
-                            <img src="assets/img/mantenimiento/placa.svg" style="width: 95%; position: relative;" alt="" srcset="">
+                            <img src="assets/img/mantenimiento/placa.svg" style="width: 95%; position: relative;" alt=""
+                                srcset="">
                             <!-- Datos del motor -->
                             <p style="position: absolute;
                             top: -6%;
@@ -222,192 +261,218 @@
                             font-size: 25px;"> Información del controlador </p>
                         </div>
 
-                        <p-cellEditor style="position: absolute; top: 7%;
-                        left: 17%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span style="color: white; font-size: 25px;"> Marca </span>
-                            </ng-template>
-                        </p-cellEditor>
+                        <div [formGroup]="formDiesel">
+                            <p-cellEditor style="position: absolute; top: 7%;
+                            left: 17%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" formControlName="dieselMotorMarca" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.marca">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span style="color: white; font-size: 25px;"> {{unidad.motor.marca}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
-                        left: 3%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 21%;
+                            left: 3%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
+                                    <input pInputText type="text" formControlName="dieselMotorModelo" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.modelo">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Modelo</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.modelo}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
-                        left: 3%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 36%;
+                            left: 3%;  display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
+                                    <input pInputText type="text" formControlName="dieselMotorSerie" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.serie">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Serie</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.serie}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 51%;
-                        left: 3%; display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
-                                <span style="color: white; font-size: 25px;"> ... </span>
-                            </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 51%;
+                            left: 3%; display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
+                                    <input pInputText type="text" formControlName="dieselMotorNumero" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.numero">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">Num. Motor</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.numero}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
-                        left: 24%; display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
-                                <span style="color: white; font-size: 25px;"> ... </span>
-                            </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 21%;
+                            left: 24%; display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
+                                    <input pInputText type="text" formControlName="dieselMotorHp" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.hp">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">HP</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.hp}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
-                        left: 24%; display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
-                                <span style="color: white; font-size: 25px;"> ... </span>
-                            </ng-template>
-                        </p-cellEditor>
+                            <p-cellEditor style="position: absolute; top: 36%;
+                            left: 24%; display: flex; flex-direction: column;">
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
+                                    <input pInputText type="text" formControlName="dieselMotorRpm" style="
+                                        background-color: #ffffff00; color: white;" [(ngModel)]="unidad.motor.rpm">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #bfbfbf; margin: 0%;" class="form-label">RPM</label>
+                                    <span style="color: white; font-size: 25px;">{{unidad.motor.rpm}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <!-- Datos del controlador -->
 
-                        <p-cellEditor style="position: absolute; top: 7%;
+                            <!-- Datos del controlador -->
+
+                            <p-cellEditor style="position: absolute; top: 7%;
                         left: 63%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <span style="color: white; font-size: 25px;"> Marca </span>
-                            </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="text" formControlName="dieselControllerMarca" style="
+                                    background-color: #ffffff00; color: white;" [(ngModel)]="unidad.controlador.marca">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <span style="color: white; font-size: 25px;">{{unidad.controlador.marca}}</span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
+                            <p-cellEditor style="position: absolute; top: 21%;
                         left: 44%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Modelo</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Modelo</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Modelo</label>
+                                    <input pInputText type="text" formControlName="dieselControllerModelo" style="
+                                    background-color: #ffffff00; color: white;"
+                                        [(ngModel)]="unidad.controlador.modelo">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Modelo</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.modelo}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
+                            <p-cellEditor style="position: absolute; top: 36%;
                         left: 44%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. serie</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. serie</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. serie</label>
+                                    <input pInputText type="text" formControlName="dieselControllerNumero" style="
+                                    background-color: #ffffff00; color: white;" [(ngModel)]="unidad.controlador.serie">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. serie</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.serie}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 51%;
+                            <p-cellEditor style="position: absolute; top: 51%;
                         left: 44%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje dc</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje dc</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje dc</label>
+                                    <input pInputText type="text" formControlName="dieselControllerDc" style="
+                                    background-color: #ffffff00; color: white;" [(ngModel)]="unidad.controlador.dc">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje dc</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.dc}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 66%;
+                            <p-cellEditor style="position: absolute; top: 66%;
                         left: 44%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje ac</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje ac</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje ac</label>
+                                    <input pInputText type="text" formControlName="dieselControllerAc" style="
+                                    background-color: #ffffff00; color: white;" [(ngModel)]="unidad.controlador.ac">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Voltaje ac</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.ac}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 21%;
+                            <p-cellEditor style="position: absolute; top: 21%;
                         left: 71%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">PSI</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">PSI</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">PSI</label>
+                                    <input pInputText type="text" formControlName="dieselControllerPSI" style="
+                                    background-color: #ffffff00; color: white;" [(ngModel)]="unidad.controlador.psi">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">PSI</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.psi}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 36%;
+                            <p-cellEditor style="position: absolute; top: 36%;
                         left: 71%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Catalago</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Catalago</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Catalago</label>
+                                    <input pInputText type="text" formControlName="dieselControllerCatalogo" style="
+                                    background-color: #ffffff00; color: white;"
+                                        [(ngModel)]="unidad.controlador.catalogo">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Num. Catalago</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.catalogo}}
+                                    </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 51%;
+                            <p-cellEditor style="position: absolute; top: 51%;
                         left: 71%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Bars</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Presión</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Presion</label>
+                                    <input pInputText type="text" formControlName="dieselControllerPresion" style="
+                                    background-color: #ffffff00; color: white;"
+                                        [(ngModel)]="unidad.controlador.presion">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Presión</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.presion}} </span>
+                                </ng-template>
+                            </p-cellEditor>
 
-                        <p-cellEditor style="position: absolute; top: 66%;
+                            <p-cellEditor style="position: absolute; top: 66%;
                         left: 71%;  display: flex; flex-direction: column;">
-                            <ng-template pTemplate="input">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Fase</label>
-                                <input pInputText type="text" style="
-                                    background-color: #ffffff00; color: white;" [(ngModel)]="marca">
-                            </ng-template>
-                            <ng-template pTemplate="output">
-                                <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Fase</label>
-                                <span style="color: white; font-size: 25px;"> ... </span> </ng-template>
-                        </p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Fase</label>
+                                    <input pInputText type="text" formControlName="dieselControllerFase" style="
+                                    background-color: #ffffff00; color: white;" [(ngModel)]="unidad.controlador.fase">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    <label style="color:  #4c4c4c; margin: 0%;" class="form-label">Fase</label>
+                                    <span style="color: white; font-size: 25px;"> {{unidad.controlador.fase}} </span>
+                                </ng-template>
+                            </p-cellEditor>
+                        </div>
                         <div style="position: absolute; right: 0%; top: 42%;">
-                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(product)" class="p-button-rounded p-button-text"></button>
-                            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(product)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(product, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                                (click)="onRowEditInit(unidad)" class="p-button-rounded p-button-text"></button>
+                            <button *ngIf="editing" [disabled]="formDiesel.invalid" pButton pRipple type="button"
+                                pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(unidad)"
+                                class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash"
+                                (click)="onRowEditDelete(unidad.id)"
+                                class="p-button-rounded p-button-text p-button-danger"></button>
+                            <br>
+                            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                                (click)="onRowBack(unidad)"
+                                class="p-button-rounded p-button-text p-button-danger"></button>
                         </div>
 
                     </td>

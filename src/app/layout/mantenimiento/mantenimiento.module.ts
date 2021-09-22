@@ -20,8 +20,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { TagModule } from 'primeng/tag';
-
-
+import { SliderModule } from 'primeng/slider';
 //COMPONENTES
 import { EmpresaComponent } from './empresa/empresa.component';
 import { UnidadesComponent } from './unidades/unidades.component';
@@ -38,6 +37,9 @@ import { StepEmpresaComponent } from './empresa/formempresa/stepEmpresa/stepEmpr
 import { StepCuartoComponent } from './empresa/formempresa/stepCuarto/stepCuarto.component';
 import { BombaPrincipalComponent } from './unidades/bombaPrincipal/bombaPrincipal.component';
 import { BombaJockeyComponent } from './unidades/bombaJockey/bombaJockey.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+// MODULOS
+
 
 @NgModule({
   declarations: [
@@ -75,8 +77,9 @@ import { BombaJockeyComponent } from './unidades/bombaJockey/bombaJockey.compone
     ButtonModule,
     InputSwitchModule,
     DialogModule,
-    TagModule
-
+    TagModule,
+    SharedModule,
+    SliderModule
   ],
   providers: [
     MessageService
