@@ -130,7 +130,7 @@
                     pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(unidad)"
                     class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
                 <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-trash"
-                    (click)="onRowEditDelete(unidad.id)"
+                    (click)="onRowEditDelete(unidad.id)" [disabled]="unidad.id===0"
                     class="p-button-rounded p-button-text p-button-danger"></button>
                 <br>
                 <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
@@ -147,3 +147,26 @@
 <ng-template pTemplate="footer">
     <p-button icon="pi pi-check" (click)="displayModal=false" label="Ok" styleClass="p-button-text"></p-button>
 </ng-template>
+
+<p-toast key="s" position="top-center"></p-toast>
+<p-toast key="i" position="top-center"></p-toast>
+<p-toast key="e" position="top-center"></p-toast>
+<p-toast key="c" position="top-center" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>Eliminar</h4>
+                <p> ¿Desea eliminar el registro? </p>
+            </div>
+            <div class="row">
+                <div class="d-grid gap-2 col-sm-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="d-grid gap-2 col-sm-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>

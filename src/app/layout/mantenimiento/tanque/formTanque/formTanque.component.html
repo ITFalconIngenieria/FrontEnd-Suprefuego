@@ -1,5 +1,5 @@
 <br>
-<form action="" [formGroup]="validateForm"  (ngSubmit)="submitForm()"
+<div [formGroup]="validateForm" 
     style="width: 95%; height: 740px; margin: auto; position: relative;">
     <h3>Configuración de tanque de agua</h3>
     <br>
@@ -32,4 +32,4 @@
             class="p-button-outlined p-button-secondary p-button-sm"></button>
         <p-button label="Guardar" [disabled]="validateForm.invalid" (onClick)="sendItem()" icon="pi pi-check" styleClass="p-button-sm"></p-button>
     </div>
-</form>
+</div>

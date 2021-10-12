@@ -1,5 +1,5 @@
 <br>
-<form action="" [formGroup]="validateForm" (ngSubmit)="submitForm()" style="width: 95%; height: 740px; margin: auto; position: relative;">
+<div [formGroup]="validateForm" style="width: 95%; height: 740px; margin: auto; position: relative;">
     <h3>Configuración de señales</h3>
     <br>
     <br>
@@ -33,4 +33,4 @@
         <button pButton pRipple type="button" label="Cancelar" class="p-button-outlined p-button-secondary p-button-sm"></button>
         <p-button label="Guardar" [disabled]="validateForm.invalid" (click)="sendItem()" value="Guardar" icon="pi pi-check" styleClass="p-button-sm"></p-button>
     </div>
-</form>
+</div>

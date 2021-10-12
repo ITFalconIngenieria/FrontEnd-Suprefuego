@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterContentChecked, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MotorService } from 'src/app/core/services/motor/motor.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-formUnidades',
@@ -14,15 +15,16 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
   stateOptions: any[];
   unidades: any[] = [];
   marca: string;
-
+  deleteId: any;
   unidadesUpdate: any[] = [];
   formDiesel: FormGroup;
   formElectrico: FormGroup;
   constructor(
     private fb: FormBuilder,
     private motorService: MotorService,
-    private ref: ChangeDetectorRef
-  ) {}
+    private ref: ChangeDetectorRef,
+    private messageService: MessageService
+  ) { }
 
   ngAfterContentChecked(): void {
     this.ref.detectChanges();
@@ -31,14 +33,12 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
   ngOnInit() {
     this.getMotor();
     this.formElectrico = this.fb.group({
-      // Motor
       electricoMotorMarca: [null, [Validators.required]]
       , electricoMotorModelo: [null, [Validators.required]]
       , electricoMotorSerie: [null, [Validators.required]]
       , electricoMotorNumero: [null, [Validators.required]]
       , electricoMotorHp: [null, [Validators.required]]
       , electricoMotorRpm: [null, [Validators.required]]
-      // Controlador
       , electricoControllerMarca: [null, [Validators.required]]
       , electricoControllerHp: [null, [Validators.required]]
       , electricoControllerVoltaje: [null, [Validators.required]]
@@ -48,14 +48,12 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
     });
 
     this.formDiesel = this.fb.group({
-      // Motor
       dieselMotorMarca: [null, [Validators.required]]
       , dieselMotorModelo: [null, [Validators.required]]
       , dieselMotorSerie: [null, [Validators.required]]
       , dieselMotorNumero: [null, [Validators.required]]
       , dieselMotorHp: [null, [Validators.required]]
       , dieselMotorRpm: [null, [Validators.required]]
-      // Controlador
       , dieselControllerMarca: [null, [Validators.required]]
       , dieselControllerModelo: [null, [Validators.required]]
       , dieselControllerNumero: [null, [Validators.required]]
@@ -75,8 +73,8 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
   getMotor() {
     this.motorService.getMotor()
       .subscribe(
-        (data: any[]) => { this.showMotor(data) }
-        , (err) => { console.log(err) }
+        (body: any) => { this.showMotor(body.data.details) }
+        , (err) => { this.showError('Error al obtener los datos.') }
       );
   }
 
@@ -87,7 +85,7 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
   postMotor(tipo) {
     let controller: any;
     switch (tipo) {
-      case 1: // ELECTRICO
+      case 1:
         controller = {
           marca: '',
           frecuencia: '',
@@ -97,7 +95,7 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
           fase: ''
         }
         break;
-      case 2: // DIESEL
+      case 2:
         controller = {
           marca: '',
           modelo: '',
@@ -111,7 +109,7 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
         }
         break;
       default:
-        // Error
+
         break;
     }
     let body: any = {
@@ -138,30 +136,27 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
     if (unidad.id === 0) {
       this.motorService.dataPost(unidad)
         .subscribe(
-          (data: any[]) => {
-            this.unidades.splice(index, 1, data);
-            this.Message('Data saved');
+          (body: any) => {
+            this.unidades.splice(index, 1, body.data.details);
+            this.successMessage('Datos guardados.');
           }
-          , (err) => { console.log(err) }
+          , (err) => { this.showError('Error al guardar el registro.') }
         );
     } else {
       this.motorService.dataPut(unidad)
         .subscribe(
-          (data: any[]) => { this.Message('Data Update') }
-          , (err) => { console.log(err) }
+          (data: any[]) => { this.successMessage('Datos actualizados.') }
+          , (err) => { this.showError('Error al actualizar el registro.') }
         );
     }
   }
 
   onRowEditDelete(id) {
-    this.motorService.dataDelete({ id: id, estado: 0 })
-      .subscribe(
-        (data: any[]) => { this.onDelete(data); }
-        , (err) => { console.log(err) }
-      );
+    this.deleteId = id;
+    this.showConfirm();
   }
 
-  onDelete(unidad){
+  onDelete(unidad) {
     let index = this.unidades.map((d) => { return d.id }).indexOf(unidad.id);
     this.unidades.splice(index, 1);
   }
@@ -170,16 +165,43 @@ export class FormUnidadesComponent implements OnInit, AfterContentChecked {
     if (unidad.id === 0) {
       let index = this.unidades.map((d) => { return d.id }).indexOf(unidad.id);
       this.unidades.splice(index, 1);
-    }else{
+    } else {
       this.unidades = this.unidadesUpdate;
     }
   }
 
-  Guardar() {
-    console.log('guardar');
+  successMessage(detail) {
+    this.messageService.add({ key: 's', severity: 'success', summary: 'Correcto', detail: detail });
   }
 
-  Message(text) {
-    alert(text);
+  infoMessage(detail) {
+    this.messageService.add({ key: 'i', severity: 'info', summary: 'Info', detail: detail });
+  }
+
+  showError(detail) {
+    this.messageService.add({ key: 'e', sticky: true, severity: 'error', summary: 'Error', detail: detail });
+  }
+
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed' });
+  }
+
+  onConfirm() {
+    this.messageService.clear('c');
+    this.motorService.dataDelete({ id: this.deleteId, estado: 0 })
+      .subscribe(
+        (body: any) => { 
+            this.onDelete(body.data.details);
+            this.infoMessage('El registro fue eliminado.');
+          }
+        , (err) => { 
+            this.showError('Error al eliminar el registro.');
+          }
+      );
+  }
+
+  onReject() {
+    this.messageService.clear('c');
   }
 }

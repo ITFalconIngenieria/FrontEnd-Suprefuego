@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { SenialService } from 'src/app/core/services/senial/senial.service';
 import { TanqueService } from 'src/app/core/services/tanque/tanque.service';
 
@@ -23,7 +24,8 @@ export class FormTanqueComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private senialService: SenialService,
-    private tanqueService: TanqueService
+    private tanqueService: TanqueService,
+    private messageService: MessageService
   ) {
     this.data = [];
   }
@@ -48,15 +50,14 @@ export class FormTanqueComponent implements OnInit {
     if (this.oldTanqueEvent.id === 0) {
       this.tanqueService.dataPost(this.oldTanqueEvent)
         .subscribe(
-          (data: any[] = []) => { this.Message('Data Saved') },
-          (err) => { console.log(err) }
+          (data: any[] = []) => { this.successMessage('Datos guardados.'); },
+          (err) => { this.errorMessage('Error al guardar el registro.') }
         );
     } else {
-      console.log('Update');
       this.tanqueService.dataPut(this.oldTanqueEvent)
         .subscribe(
-          (data: any[] = []) => { this.Message('Data Updated') },
-          (err) => { console.log(err) }
+          (data: any) => { this.successMessage('Datos Actualizados.') },
+          (err) => { this.errorMessage('Error al actualizar el registro.') }
         );
     }
   }
@@ -64,14 +65,17 @@ export class FormTanqueComponent implements OnInit {
   getDataSenial() {
     this.senialService.dataGet()
       .subscribe(
-        (data: any[] = []) => { this.seniales = data },
-        (err) => { console.log(err) }
+        (body: any) => { this.seniales = body.data.details },
+        (err) => { this.errorMessage('Error al obtener los datos.') }
       );
   }
 
-  Message(text) {
-    this.newTanqueEvent.emit(this.oldTanqueEvent);
-    alert(text);
+  successMessage(detail) {
+    this.newTanqueEvent.emit({data: this.oldTanqueEvent, message: detail, isError: false});
+  }
+
+  errorMessage(detail) {
+    this.newTanqueEvent.emit({isError: true, message: detail});
   }
 
 }
