@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { SenialService } from 'src/app/core/services/senial/senial.service';
 
 @Component({
@@ -15,26 +16,19 @@ export class SenialesComponent implements OnInit {
   first = 0;
   rows = 1;
   itemSenial: any;
-  constructor(private senialService: SenialService) {
+  deleteId: any;
+  constructor(private senialService: SenialService
+    , private messageService: MessageService) {
     this.displayForm = false;
     this.data = [];
-    this.itemSenial = {
-      id: 0,
-      unidad: '',
-      descripcion: '',
-      etiqueta: '',
-      servidor: '',
-      fuente: '',
-      estado: true,
-      isDeleted: 1
-    }
+    this.cleanData();
   }
 
   getData(){
     this.senialService.dataGet()
     .subscribe(
-      (data: any[]=[]) => { this.seniales = data},
-      (err) => {}
+      (body: any) => { this.seniales = body.data.details },
+      (err) => { this.errorMessage('Error al obtener los datos.') }
     );
   }
 
@@ -64,21 +58,50 @@ export class SenialesComponent implements OnInit {
   }
 
   rowDelete(id) {
-    alert(id);
-    this.senialService.dataDelete({ id: id, isDeleted: 0 })
+    this.deleteId = id;
+    this.showConfirm();
+  }
+
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Eliminar', detail: '¿Desea eliminar el registro?'});
+  }
+
+  onConfirm() {
+    console.log(this.deleteId);
+    this.messageService.clear('c');
+    this.senialService.dataDelete({ id: this.deleteId, isDeleted: 0 })
       .subscribe(
-        (data: any[]) => { this.onDelete(data) }
-        , (err) => { console.log(err) }
+        (body: any) => { 
+            this.onDelete(body.data.details);
+            this.infoMessage('El registro fue eliminado.');
+          }
+        , (err) => { 
+            console.log(err);
+            this.errorMessage('Error al eliminar el registro.');
+          }
       );
+  }
+
+  infoMessage(detail) {
+    this.messageService.add({ key: 'i', severity: 'info', summary: 'Info', detail: detail });
+  }
+
+  successMessage(detail) {
+    this.messageService.add({ key: 's', severity: 'success', summary: 'Correcto', detail: detail });
+  }
+
+  errorMessage(detail) {
+    this.messageService.add({ key: 'e', sticky: true, severity: 'error', summary: 'Error', detail: detail });
+  }
+
+  onReject() {
+    this.messageService.clear('c');
   }
 
   onDelete(unidad){
     let index = this.seniales.map((d) => { return d.id }).indexOf(unidad.id);
     this.seniales.splice(index, 1);
-  }
-
-  Message(text){
-    alert(text);
   }
 
   cleanData(){
@@ -103,10 +126,17 @@ export class SenialesComponent implements OnInit {
   }
 
   showSenial(item){
-    if (item.id===0){
-      this.seniales.unshift(item);
+    if (item.isError){
+      this.errorMessage(item.message);
+    }else{
+      if (item.data.id===0){
+        this.seniales.unshift(item.data);
+        this.successMessage(item.message);
+      }else{
+        this.successMessage(item.message);
+      }
     }
-    this.displayForm = false;
+  this.displayForm = false;
   }
 
   updateData(item){

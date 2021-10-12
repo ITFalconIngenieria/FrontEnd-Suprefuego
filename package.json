@@ -23,7 +23,6 @@
     "angular-fusioncharts": "^3.1.0",
     "bootstrap": "^5.0.2",
     "chart.js": "^2.9.4",
-    "react-chartjs-2": "^3.0.3",
     "fusioncharts": "^3.17.0",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
@@ -31,6 +30,7 @@
     "popper.js": "^1.16.1",
     "primeicons": "^4.1.0",
     "primeng": "^12.1.0-rc.1",
+    "react-chartjs-2": "^3.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"

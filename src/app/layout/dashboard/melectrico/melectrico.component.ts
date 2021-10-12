@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MessageService } from 'primeng/api';
 import * as moment from 'moment';
+import { WebsocketService } from 'src/app/core/services/websocket/websocket.service';
 moment.locale('es');
 
 @Component({
@@ -33,13 +34,14 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
   ioBomba: number = 0;
   stateOptions: any[];
   showHpresion: boolean;
+  showDataVar: boolean;
   showHtanque: boolean;
   engineRun: boolean;
   errorMotor: boolean;
   errorTanque: boolean;
   errorPresion: boolean;
   errorBomba: boolean;
-
+  arrayData: any;
   displayNameMap = new Map([
     [Breakpoints.XSmall, 'XSmall'],
     [Breakpoints.Small, 'Small'],
@@ -50,19 +52,28 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private breakpointObserver: BreakpointObserver
     , private cd: ChangeDetectorRef
     , private renderer: Renderer2
-    , private messageService: MessageService) {
+    , private messageService: MessageService
+    , private websocketService: WebsocketService) {
     this.showHtanque = false;
+    this.showDataVar = false;
     this.engineRun = false;
     this.errorMotor = false;
     this.errorTanque = false;
     this.errorPresion = false;
     this.errorBomba = false;
+    this.arrayData = [{
+      id: "N/A-000000000000",
+        communicationKO: false,
+        datetime: moment().format('YYYY-MM-DD[T]hh:mm:ss.[000]Z'),
+        device: "N/A",
+        timestamp: new Date(),
+        value: 0
+    }]
   }
 
   ngOnInit() {
     this.stateOptions = [{ label: 'ON', value: 1 }, { label: 'OFF', value: 0 }];
     this.time = moment().format("dddd, MMMM Do YYYY, h:mm:ss a").toString();
-    console.log(moment());
     this.showCylinder('100%');
     this.showGauge();
     this.showGaugeState();
@@ -103,10 +114,25 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
 
       }
     });
+
+    this.websocketService.getData();
+    this.websocketService.webSocket.subscribe(data => {
+      if (Array.isArray(data.Items)){
+        this.websocketService.stopTimeout();
+        this.arrayData=[];
+        this.arrayData=data.Items;
+        console.log(this.arrayData);
+        this.cd.detectChanges();
+      this.websocketService.interval = setInterval(() => {
+          this.websocketService.getData();
+        }, 5000);
+        return true;
+      }
+    });
   }
 
   ngAfterViewInit() {
-    console.log("afterinit");
+
     this.messageService.add({ key: 'myKey1', severity: 'warn', summary: 'Summary Text', detail: 'Detail Text', sticky: true });
     /*setTimeout(() => {
       this.renderer.addClass(this.divCylinder.nativeElement, 'border-danger');
@@ -117,6 +143,7 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.websocketService.destroySubscribe();
     this.destroyed.next();
     this.destroyed.complete();
   }
@@ -127,6 +154,10 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   showHisPresion() {
     this.showHpresion = true;
+  }
+
+  showData() {
+    this.showDataVar = true;
   }
 
   cambiarDatos() {
