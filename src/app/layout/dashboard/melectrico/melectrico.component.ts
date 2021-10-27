@@ -51,7 +51,6 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
   ]);
   constructor(private breakpointObserver: BreakpointObserver
     , private cd: ChangeDetectorRef
-    , private renderer: Renderer2
     , private messageService: MessageService
     , private websocketService: WebsocketService) {
     this.showHtanque = false;
@@ -115,7 +114,7 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.websocketService.getData();
+    /*this.websocketService.getData();
     this.websocketService.webSocket.subscribe(data => {
       if (Array.isArray(data.Items)){
         this.websocketService.stopTimeout();
@@ -128,7 +127,7 @@ export class MelectricoComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 5000);
         return true;
       }
-    });
+    });*/
   }
 
   ngAfterViewInit() {
