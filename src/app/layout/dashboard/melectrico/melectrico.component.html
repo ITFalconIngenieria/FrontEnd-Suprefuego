@@ -1,4 +1,7 @@
 <br>
+<button type="button" (click)="showData()" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dataView">
+    Ver datos
+</button>
 <div class="row text-center">
     <div class="container">
         <div class="row">
@@ -58,7 +61,7 @@
             <div class="col-sm-4">
                 <div class="card divSize margenes border">
                     <div class="container" style="margin-top: 25%;">
-                        <h3>{{time}}</h3>
+                        <h3>{{arrayData[0].datetime}}</h3>
                     </div>
                 </div>
             </div>
@@ -172,9 +175,6 @@
     </div>
 </div>
 
-
-
-
 <p-sidebar [(visible)]="showHtanque" [fullScreen]="true" [baseZIndex]="1000" [modal]="false">
     <h3>Historico de niveles de tanque</h3>
     <br>
@@ -185,4 +185,16 @@
     <h3>Historico de presion del sistema</h3>
     <br>
     <app-hpresion></app-hpresion>
+</p-sidebar>
+
+<p-sidebar [(visible)]="showDataVar" [fullScreen]="true" [baseZIndex]="1000" [modal]="false">
+    <h3>Historico de niveles de tanque</h3>
+    <br>
+    <div>
+        <div class="row" *ngFor="let item of arrayData">
+            <div class="col-sm-4"> {{ item.id }} </div>
+            <div class="col-sm-4"> {{ item.value | number: '1.2-2' }} </div>
+            <div class="col-sm-4"> {{ item.datetime }} </div>
+        </div>
+    </div>
 </p-sidebar>

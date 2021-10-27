@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, AfterContentChecked } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MotorService } from 'src/app/core/services/motor/motor.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-bombaPrincipal',
@@ -13,15 +14,15 @@ export class BombaPrincipalComponent implements OnInit, AfterContentChecked {
   dataMiembros: any;
   stateOptions: any[];
   unidades: any[] = [];
-  marca: string;
+  deleteId: any;
   unidadesUpdate: any[] = [];
   bombaPrincipal: FormGroup;
   constructor(
     private fb: FormBuilder,
     private motorService: MotorService,
-    private ref: ChangeDetectorRef
+    private ref: ChangeDetectorRef,
+    private messageService: MessageService
   ) {
-    this.marca = 'marca';
   }
 
   ngOnInit() {
@@ -29,7 +30,6 @@ export class BombaPrincipalComponent implements OnInit, AfterContentChecked {
     this.stateOptions = [{ label: 'Activo', value: 'off' }, { label: 'Inactivo', value: 'on' }];
 
     this.bombaPrincipal = this.fb.group({
-      // Bomba
       bombaMarca: [null, [Validators.required]]
       , bombaTipo: [null, [Validators.required]]
       , bombaSerie: [null, [Validators.required]]
@@ -38,7 +38,6 @@ export class BombaPrincipalComponent implements OnInit, AfterContentChecked {
       , bombaRevoluciones: [null, [Validators.required]]
       , bombaDiametro: [null, [Validators.required]]
       , bombaPotencia: [null, [Validators.required]]
-      // Controlador
       , controllerMarca: [null, [Validators.required]]
       , controllerHp: [null, [Validators.required]]
       , controllerVoltaje: [null, [Validators.required]]
@@ -58,21 +57,13 @@ export class BombaPrincipalComponent implements OnInit, AfterContentChecked {
   getMain() {
     this.motorService.getMain()
       .subscribe(
-        (data: any[]) => { this.showMotor(data) }
-        , (err) => { console.log(err) }
+        (body: any) => { this.showMotor(body.data.details) }
+        , (err) => { this.showError('Error al obtener los datos.') }
       );
   }
 
   showMotor(data) {
     this.unidades = data;
-  }
-
-  submitForm(): void {
-
-  }
-
-  Guardar() {
-    console.log('guardar');
   }
 
   postMain() {
@@ -112,32 +103,28 @@ export class BombaPrincipalComponent implements OnInit, AfterContentChecked {
 
   onRowEditSave(unidad) {
     let index = this.unidades.map((d) => { return d.id }).indexOf(unidad.id);
-    console.log(unidad);
+
     if (unidad.id === 0) {
       this.motorService.dataPost(unidad)
         .subscribe(
-          (data: any[]) => {
-            this.unidades.splice(index, 1, data);
-            this.Message('Data saved');
-            console.log(data);
+          (body: any) => {
+            this.unidades.splice(index, 1, body.data.details);
+            this.successMessage('Datos guardados.');
           }
-          , (err) => { console.log(err) }
+          , (err) => { this.showError('Error al guardar el registro.') }
         );
     } else {
       this.motorService.dataPut(unidad)
         .subscribe(
-          (data: any[]) => { this.Message('Data Update') }
-          , (err) => { console.log(err) }
+          (body: any) => { this.successMessage('Datos actualizados.') }
+          , (err) => { this.showError('Error al actualizar el registro.') }
         );
     }
   }
 
   onRowEditDelete(id) {
-    this.motorService.dataDelete({ id: id, estado: 0 })
-      .subscribe(
-        (data: any[]) => { this.onDelete(data); }
-        , (err) => { console.log(err) }
-      );
+    this.deleteId = id;
+    this.showConfirm();
   }
 
   onDelete(unidad){
@@ -154,7 +141,39 @@ export class BombaPrincipalComponent implements OnInit, AfterContentChecked {
     }
   }
 
-  Message(text) {
-    alert(text);
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Eliminar', detail: '¿Desea eliminar el registro?' });
+  }
+
+  onConfirm() {
+    this.messageService.clear('c');
+    this.motorService.dataDelete({ id: this.deleteId, estado: 0 })
+      .subscribe(
+        (body: any) => { 
+            this.onDelete(body.data.details);
+            this.infoMessage('El registro fue eliminado.');
+          }
+        , (err) => { 
+            console.log(err);
+            this.showError('Error al eliminar el registro.');
+          }
+      );
+  }
+
+  onReject() {
+    this.messageService.clear('c');
+  }
+
+  successMessage(detail) {
+    this.messageService.add({ key: 's', severity: 'success', summary: 'Correcto', detail: detail });
+  }
+
+  infoMessage(detail) {
+    this.messageService.add({ key: 'i', severity: 'info', summary: 'Info', detail: detail });
+  }
+
+  showError(detail) {
+    this.messageService.add({ key: 'e', sticky: true, severity: 'error', summary: 'Error', detail: detail });
   }
 }

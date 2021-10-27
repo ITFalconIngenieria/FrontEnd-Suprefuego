@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { SenialService } from 'src/app/core/services/senial/senial.service';
 import { TanqueService } from 'src/app/core/services/tanque/tanque.service';
 
@@ -15,46 +16,66 @@ export class TanqueComponent implements OnInit {
   tanques: any[] = [];
   itemTanque: any;
   seniales: any[] = [];
+  deleteId: any;
   constructor(private senialService: SenialService
-    , private tanqueService: TanqueService) {
+    , private tanqueService: TanqueService
+    , private messageService: MessageService) {
     this.displayForm = false;
-    this.data = [];
     this.cleanData();
   }
 
   async ngOnInit() {
-    this.getData();
     this.getDataSenial();
-    this.data.push({ value: 0 });
-
-    /*this.tanques = [{
-      senal: 'señal 1',
-      capmax: 100,
-      setpoint: 1,
-      estado: true
-    }]*/
+    this.getData();
   }
 
   getData(){
     this.tanqueService.dataGet()
     .subscribe(
-      (data: any[]=[]) => { this.tanques = data },
-      (err) => { console.log(err) }
+      (body: any) => { this.tanques = body.data.details; },
+      (err) => { this.errorMessage('Error al obtener los datos de Tanques.') }
+    );
+  }
+
+  getDataSenial(){
+    this.senialService.dataGet()
+    .subscribe(
+      (body: any) => { this.seniales = body.data.details; },
+      (err) => { this.errorMessage('Error al obtener los datos de Señales.')  }
     );
   }
 
   rowDelete(id) {
-    alert(id);
-    console.log({ id: id, isDeleted: 0 });
-    this.tanqueService.dataDelete({ id: id, isDeleted: 0 })
+    this.deleteId = id;
+    this.showConfirm();;
+  }
+
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Eliminar', detail: '¿Desea eliminar el registro?'});
+  }
+
+  onConfirm() {
+    this.messageService.clear('c');
+    this.tanqueService.dataDelete({ id: this.deleteId, isDeleted: 0 })
       .subscribe(
-        (data: any[]) => { this.onDelete(data) }
-        , (err) => { console.log(err) }
+        (body: any) => { 
+          console.log(body.data.details);
+            this.onDelete(body.data.details);
+            this.infoMessage('El registro fue eliminado.');
+          }
+        , (err) => { 
+            console.log(err);
+            this.errorMessage('Error al eliminar el registro.');
+          }
       );
   }
 
+  onReject() {
+    this.messageService.clear('c');
+  }
+
   onDelete(unidad){
-    console.log(unidad);
     let index = this.tanques.map((d) => { return d.id }).indexOf(unidad.id);
     this.tanques.splice(index, 1);
   }
@@ -68,10 +89,17 @@ export class TanqueComponent implements OnInit {
   }
 
   showTanque(item){
-    if (item.id===0){
-      this.tanques.unshift(item);
+    if (item.isError){
+      this.errorMessage(item.message);
+    }else{
+      if (item.data.id===0){
+        this.tanques.unshift(item.data);
+        this.successMessage(item.message);
+      }else{
+        this.successMessage(item.message);
+      }
     }
-    this.displayForm = false;
+  this.displayForm = false;
   }
 
   cleanData(){
@@ -89,16 +117,19 @@ export class TanqueComponent implements OnInit {
     }
   }
 
-  getDataSenial(){
-    this.senialService.dataGet()
-    .subscribe(
-      (data: any[]=[]) => { this.seniales = data},
-      (err) => { console.log(err) }
-    );
-  }
-
-  
   updateData(item){
     this.itemTanque = item;
+  }
+
+  infoMessage(detail) {
+    this.messageService.add({ key: 'i', severity: 'info', summary: 'Info', detail: detail });
+  }
+
+  successMessage(detail) {
+    this.messageService.add({ key: 's', severity: 'success', summary: 'Correcto', detail: detail });
+  }
+
+  errorMessage(detail) {
+    this.messageService.add({ key: 'e', sticky: true, severity: 'error', summary: 'Error', detail: detail });
   }
 }

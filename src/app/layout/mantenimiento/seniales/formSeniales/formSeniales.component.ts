@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { SenialService } from 'src/app/core/services/senial/senial.service';
 
 @Component({
@@ -18,7 +19,8 @@ export class FormSenialesComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private senialService: SenialService
+    private senialService: SenialService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit() {
@@ -32,35 +34,32 @@ export class FormSenialesComponent implements OnInit {
       fuente: [null, [Validators.required]],
       estado: [null, [Validators.required]],
     });
-  }
-
-  submitForm(): void {
-
+    console.log(this.oldSenialEvent);
   }
 
   sendItem() {
     if (this.oldSenialEvent.id === 0) {
-      console.log('Add');
-      
       this.senialService.dataPost(this.oldSenialEvent)
         .subscribe(
-          (data: any[] = []) => { 
-            this.Message('Data Saved');
+          (data: any) => { 
+            this.successMessage('Datos guardados.');
            },
-          (err) => { console.log(err) }
+          (err) => { this.errorMessage('Error al guardar el registro.') }
         );
     } else {
-      console.log('Update');
       this.senialService.dataPut(this.oldSenialEvent)
         .subscribe(
-          (data: any[] = []) => { this.Message('Data Updated') },
-          (err) => { console.log(err) }
+          (data: any) => { this.successMessage('Datos Actualizados.') },
+          (err) => { this.errorMessage('Error al actualizar el registro.') }
         );
     }
   }
+  
+  successMessage(detail) {
+    this.newSenialEvent.emit({data: this.oldSenialEvent, message: detail, isError: false});
+  }
 
-  Message(text) {
-    this.newSenialEvent.emit(this.oldSenialEvent);
-    alert(text);
+  errorMessage(detail) {
+    this.newSenialEvent.emit({isError: true, message: detail});
   }
 }
