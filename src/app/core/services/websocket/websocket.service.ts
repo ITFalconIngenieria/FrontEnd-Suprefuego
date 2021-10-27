@@ -12,7 +12,7 @@ export class WebsocketService {
   count: number;
   connectionId: string;
   public arrayData:any;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient) {git 
     this.count = 0;
     this.connectionId = '';
   }
