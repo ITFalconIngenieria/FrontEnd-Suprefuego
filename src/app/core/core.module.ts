@@ -3,14 +3,17 @@ import { CommonModule } from '@angular/common';
 import { MotorService } from './services/motor/motor.service';
 import { SenialService } from './services/senial/senial.service';
 import { WebsocketService } from './services/websocket/websocket.service';
+import { HistoryService } from './services/history/history.service';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule
   ],
-  providers: [MotorService
-  , SenialService
-  , WebsocketService]
+  providers: [
+    MotorService
+    , HistoryService
+    , SenialService
+    , WebsocketService]
 })
 export class CoreModule { }

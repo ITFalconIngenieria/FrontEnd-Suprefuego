@@ -21,6 +21,10 @@ import { SidebarModule } from 'primeng/sidebar';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ChartModule } from 'primeng/chart';
+import { RippleModule } from 'primeng/ripple';
+import { BlockUIModule } from 'primeng/blockui';
+import { PanelModule } from 'primeng/panel';
+import { ProgressBarModule } from 'primeng/progressbar';
 //COMPONENTES
 import { DashboardComponent } from './dashboard.component';
 import { MdieselComponent } from './mdiesel/mdiesel.component';
@@ -51,7 +55,11 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme, Widgets);
     SidebarModule,
     CalendarModule,
     SelectButtonModule,
-    ChartModule
+    ChartModule,
+    RippleModule,
+    BlockUIModule,
+    PanelModule,
+    ProgressBarModule
   ],
   providers: [MessageService]
 })

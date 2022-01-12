@@ -1,10 +1,59 @@
 <div class="card">
-    <br>
-    <div class="p-field p-col-12 p-md-8">
-        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
+    <div class="container-sm">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="card overCard filterDate" (click)="countDate = 0; getDataByDate( 'year' )" pRipple>
+                    Año
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card overCard filterDate" (click)="countDate = 0; getDataByDate( 'month' )" pRipple>
+                    Mes
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card overCard filterDate" (click)="countDate = 0; getDataByDate( 'day' )" pRipple>
+                    Dia
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="card filterDate" pRipple>
+                    Default
+                </div>
+            </div>
+        </div>
     </div>
-    <br><br>
-    <div style="position: relative;">
+
+    <div class="container-sm">
+        <div class="row">
+            <div class="col-sm-5" style="align-items: right;">
+                <button pButton pRipple 
+                    type="button"
+                    icon="pi pi-angle-left"
+                    class="p-button-rounded p-button-outlined"
+                    (click)="back()"></button>
+            </div>
+            <div class="col-sm-2" style="align-items: center;">
+                <p> {{ textInterval }} </p>
+            </div>
+            <div class="col-sm-5" style="align-items: left;">
+                <button pButton pRipple
+                    type="button"
+                    icon="pi pi-angle-right"
+                    class="p-button-rounded p-button-outlined"
+                    (click)="next()"></button>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="p-field p-col-12 p-md-8">
+        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
+    </div> -->
+    <br>
+
+    <p-blockUI [blocked]="blockedGraphic" [target]="pnl"></p-blockUI>
+    <p-progressBar *ngIf="blockedGraphic" mode="indeterminate" [style]="{'height': '6px'}"></p-progressBar>
+
+    <p-panel #pnl>
         <fusioncharts type="area2d" width="1500" height="600" [dataSource]="dataSource">
         </fusioncharts>
         <div style="background-color: rgb(255 255 255);
@@ -14,7 +63,5 @@
         bottom: 0;">
             <span style="color: rgb(255 255 255);">.</span>
         </div>
-    </div>
-
-
+    </p-panel>  
 </div>
